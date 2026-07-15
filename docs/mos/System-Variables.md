@@ -115,6 +115,15 @@ The command prompt that the MOS CLI displays is defined using the variable named
 
 If you unset the `CLI$Prompt` variable, the system will revert to displaying the default prompt which is `*`.
 
+For example, to set your prompt to be written in yellow on black, returning to white on black for your commands, you can add the following line to your [boot script](../MOS.md#boot-script):
+
+```
+setmacro CLI$Prompt <17><128><17><11><Current$Dir> *<17><15>
+```
+
+Note that the above prompt change relies on being in default colours, in 16 or 64 colour modes. In 2 or 4 colour modes the prompt will appear to be white on black. It works by taking advantage of the GSTrans mechanism interpreting the `<123>` entries as literal characters to send. This means the the first part of the new prompt is the equivalent of `vdu 17 128 17 11`, and after the `*`, the ending is the equivalent of `vdu 17 15`.
+
+
 ### `CLI$AutoPaged` {#autopaged}
 
 Setting a variable `CLI$AutoPaged` to any value will enable the auto-paging feature of the CLI, if you are using VDP 2.14.0 or later by [temporarily enabling paged mode](../vdp/System-Commands.md#vdu-23-0-9a).  By default this variable is not set.
